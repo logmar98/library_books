@@ -1,0 +1,32 @@
+.registerSection{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+.registerContainer{
+    background-color: #454545;
+    padding: 40px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 65px;
+
+}
+.header{
+    color: #B5AC95;
+}
+.inputs{
+    border-radius: 20px;
+    background-color: #F0EEE2;
+    border: none;
+    padding: 10px 20px;
+}
+.registerForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}

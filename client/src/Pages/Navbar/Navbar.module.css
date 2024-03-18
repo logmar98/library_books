@@ -1,0 +1,37 @@
+.navbar{
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #E0D7D1;
+}
+.navbar div{
+    display: flex;
+    align-items: center;
+}
+
+.img{
+    height: 60px;
+    width: auto;
+    margin-left: 20px;
+}
+
+.links{
+    list-style: none;
+    display: flex;
+    margin: 0;
+    gap: 20px;
+}
+.links a:hover{
+    color: #454545;
+    
+}
+a{
+    color: black;
+    text-decoration: none;
+}
+.signin, .signup{
+    margin-right: 20px;
+    color: #454545;
+}
+

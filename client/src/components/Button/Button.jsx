@@ -23,14 +23,15 @@ function Button(props) {
     }
 
     return (
-        <div
+        <button
             style={buttonStyle}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             className={styles.btn}
+            onClick={props.onClick}
         >
-            <p>{props.text}</p>
-        </div>
+            {props.text}
+        </button>
     );
 }
 

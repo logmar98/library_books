@@ -16,8 +16,8 @@ function Navbar() {
                 </ul>
             </div>
             <div>
-                <a className={styles.signin} href="">sign in</a>
-                <a className={styles.signup} href=""><Button text="sing up"/></a>
+                <a className={styles.signin} href="/login">login</a>
+                <a className={styles.signup} href="/signup"><Button text="Register"/></a>
             </div>
         </nav>
 

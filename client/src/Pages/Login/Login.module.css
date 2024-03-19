@@ -1,12 +1,12 @@
-.registerSection{
+.loginSection{
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80vh;
 }
-.registerContainer{
-    background-color: #454545;
+.loginContainer{
+    background-color: #B5AC95;
     padding: 40px 60px;
     display: flex;
     flex-direction: column;
@@ -15,7 +15,7 @@
 
 }
 .header{
-    color: #B5AC95;
+    color: #453939;
 }
 .inputs{
     border-radius: 20px;
@@ -24,7 +24,7 @@
     padding: 10px 20px;
     width: 250px;
 }
-.registerForm {
+.loginForm {
     display: flex;
     flex-direction: column;
     justify-content: center;

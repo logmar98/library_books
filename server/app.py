@@ -3,7 +3,7 @@ from flask_bcrypt import Bcrypt
 from flask_cors import CORS, cross_origin
 from flask_session import Session
 from config import ApplicationConfig
-from models import db, User
+from models import db, User, Library
 
 app = Flask(__name__)
 app.config.from_object(ApplicationConfig)
@@ -89,6 +89,38 @@ def get_library():
     return jsonify({
         "libraries": [library.tojson() for library in user.libraries]
     })
+
+@app.route("/new_book", methods=["PUT"])
+def add_book():
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    user = User.query.filter_by(id=user_id).first()
+    book_name = request.json["book_name"]
+    book_id = request.json["book_id"]
+    status = request.json["status"]
+    library = request.json["library"]
+    create_at = request.json["create_at"]
+    update_at = request.json["update_at"]
+    complited_at = request.json["complited_at"]
+
+    new_book = Library(
+        book_name=book_name,
+        book_id=book_id,
+        status=status,
+        library=library,
+        create_at=create_at,
+        update_at=update_at,
+        complited_at=complited_at,
+        user_id=user.id
+    )
+
+    db.session.add(new_book)
+    db.session.commit()
+
+    return jsonify(new_book.tojson())
 
 
 if __name__ == "__main__":

@@ -40,13 +40,14 @@ class Library(db.Model):
 
     def tojson(self):
         return {
-            'id': self.id,
-            'book_name': self.book_name,
-            'book_id': self.book_id,
-            'status': self.status,
-            'library': self.library,
-            'create_at': self.create_at,
-            'update_at': self.update_at,
-            'complited_at': self.complited_at,
-            'user_id': self.user_id
+            self.id: {
+                'book_name': self.book_name,
+                'book_id': self.book_id,
+                'status': self.status,
+                'library': self.library,
+                'create_at': self.create_at,
+                'update_at': self.update_at,
+                'complited_at': self.complited_at,
+                'user_id': self.user_id
+                }
         }

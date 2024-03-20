@@ -2,6 +2,7 @@ import styles from './Library.module.css';
 import React, { useState, useEffect } from 'react';
 import { User } from '../../types.jsx'
 import httpClient from '../../httpClient';
+import LibrarySection from '../../components/LibrarySection/LibrarySection.jsx';
 
 function Library() {
     const [user, setUser] = useState(User);
@@ -19,10 +20,9 @@ function Library() {
 
     return (
         <div className={styles.librarySection}>
-            <div className={styles.libraryContainer}>
-                <h1 className={styles.header}>Library</h1>
-                <p>hello, {user.username}</p>
-            </div>
+            <h1 className={styles.header}>hello, {user.username}</h1>
+            <LibrarySection />
+
         </div>
     );
 }

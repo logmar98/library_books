@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import styles from './Register.module.css';
 import Button from '../../components/Button/Button';
+import httpClient from '../../httpClient';
 
 function Register() {
-    
+
+    const [name, setname] = useState('');
+    const [mail, setmail] = useState('');
+    const [pass, setPass] = useState('');
+
     const checkpassword = () => {
         const password = document.getElementById('Password');
         const confirmPassword = document.getElementById('confirmPassword');
@@ -35,7 +40,22 @@ function Register() {
         }
     }
 
-    
+    const registerUser = async () => {
+        const alert = document.getElementById('alert');
+
+        try {
+            const resp = await httpClient.post("//localhost:5000/register", {
+                username: name,
+                email: mail,
+                password: pass
+            });
+            window.location.href = '/library';
+        } catch (error) {
+            if (error.response.status === 409) {
+                alert.innerHTML = 'Email already exists';
+            }
+        }
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -57,30 +77,46 @@ function Register() {
             alert.innerHTML = 'Password must be at least 8 characters';
         }
         else {
-            alert.innerHTML = '';
+            registerUser();
         }
     }
 
+
+    const handleUsername = (e) => {
+        setname(e.target.value);
+    }
+    const handleEmail = (e) => {
+        setmail(e.target.value);
+    }
+    const handlePassword = (e) => {
+        setPass(e.target.value);
+    }
     return (
         <div className={styles.registerSection}>
             <div className={styles.registerContainer}>
-                <h1 className={styles.header}>Sign Up</h1>
+                <h1 className={styles.header}>Register</h1>
                 <form onSubmit={handleSubmit} className={styles.registerForm}>
                     <div>
-                        <input className={styles.inputs} placeholder='User Name' type="text" id="username" name="username" />
+                        <input onChange={(event) => handleUsername(event)} className={styles.inputs} placeholder='User Name' type="text" id="username" name="username" />
                     </div>
                     <div>
-                        <input onChange={checkemail} className={styles.inputs} placeholder='Email' type="text" id="email" name="email" />
+                        <input onChange={(event) => {
+                                        handleEmail(event);
+                                        checkemail();
+                                        }} className={styles.inputs} placeholder='Email' type="text" id="email" name="email" />
                     </div>
                     <div>
-                        <input onChange={checkpasswordlength} className={styles.inputs} placeholder='Password' type="password" id="Password" name="confirmPassword" />
+                        <input onChange={(event) => {
+                                        handlePassword(event);
+                                        checkpasswordlength();
+                                        }} className={styles.inputs} placeholder='Password' type="password" id="Password" name="confirmPassword" />
                     </div>
                     <div>
                         <input onChange={checkpassword} className={styles.inputs} placeholder='Confirm Password' type="password" id="confirmPassword" name="confirmPassword" />
                     </div>
                     <p id='alert' className={styles.alert}></p>
                     <div className={styles.btn}>
-                        <Button text='Sign Up' background='#B5AC95' color='#453939'/>
+                        <Button text='Register' background='#B5AC95' color='#453939'/>
                     </div>
                 </form>
             </div>

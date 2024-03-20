@@ -22,15 +22,23 @@
     margin: 0;
     gap: 20px;
 }
-.links a:hover{
-    color: #454545;
+.links a:hover, .login:hover{
+    color: #353434;
     
+}
+.links a:active, .login:active{
+    color: #c78787;
+    text-decoration: none;
 }
 a{
     color: black;
     text-decoration: none;
 }
-.signin, .signup{
+.login{
+    margin-right: 20px;
+}
+
+.register{
     margin-right: 20px;
     color: #454545;
 }

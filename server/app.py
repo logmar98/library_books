@@ -26,6 +26,7 @@ def get_current_user():
     user = User.query.filter_by(id=user_id).first()
     return jsonify({
         "id": user.id,
+        "username": user.username,
         "email": user.email
     }) 
 
@@ -77,6 +78,17 @@ def logout_user():
     session.pop("user_id")
     return "200"
 
+@app.route("/library", methods=["GET"])
+def get_library():
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    user = User.query.filter_by(id=user_id).first()
+    return jsonify({
+        "libraries": [library.tojson() for library in user.libraries]
+    })
 
 
 if __name__ == "__main__":

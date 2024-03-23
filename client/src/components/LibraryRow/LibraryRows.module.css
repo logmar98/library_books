@@ -1,0 +1,24 @@
+.librarySection{
+    background-color: #8C2920;
+    border-radius: 18px;
+    padding: 20px;
+    padding-top: 0;
+    width: 100%;
+}
+.libraryRow{
+    background-color: #591919;
+    border-radius: 18px;
+    padding: 10px;
+    box-shadow: 10px -10px 5px black inset;
+    height: fit-content;
+    min-height: 100px;
+    display: flex;
+    gap: 10px;
+
+
+
+    
+}
+.librarySection p{
+    margin: 5px;
+}

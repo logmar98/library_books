@@ -122,6 +122,27 @@ def add_book():
 
     return jsonify(new_book.tojson())
 
+@app.route("/update_book", methods=["POST"])
+def update_book():
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    user = User.query.filter_by(id=user_id).first()
+    book_id = request.json["book_id"]
+    status = request.json["status"]
+    update_at = request.json["update_at"]
+    complited_at = request.json["complited_at"]
+
+    book = Library.query.filter_by(book_id=book_id).first()
+    book.status = status
+    book.update_at = update_at
+    book.complited_at = complited_at
+
+    db.session.commit()
+
+    return jsonify(book.tojson())
 
 if __name__ == "__main__":
     app.run(debug=True)

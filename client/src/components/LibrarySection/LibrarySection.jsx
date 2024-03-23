@@ -21,7 +21,7 @@ function LibrarySection() {
         <summary ref={summaryRef} id='header' className={styles.containerHeader}>Read Later</summary>
         <div className={styles.containerBody}>
             <LibraryRows />
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eaque minus laudantium molestias atque repudiandae quo deleniti libero eius dolore necessitatibus, consequuntur ducimus reiciendis obcaecati laboriosam, voluptatibus dicta quia! Laboriosam, consequatur!</p>
+            <LibraryRows />
         </div>
       </details>
     </div>

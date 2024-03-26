@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, session
+import requests
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS, cross_origin
 from flask_session import Session
@@ -122,7 +123,7 @@ def add_book():
 
     return jsonify(new_book.tojson())
 
-@app.route("/update_book", methods=["POST"])
+@app.route("/update_book", methods=["PATCH"])
 def update_book():
     user_id = session.get("user_id")
 
@@ -132,17 +133,35 @@ def update_book():
     user = User.query.filter_by(id=user_id).first()
     book_id = request.json["book_id"]
     status = request.json["status"]
+    library = request.json["library"]
     update_at = request.json["update_at"]
-    complited_at = request.json["complited_at"]
 
     book = Library.query.filter_by(book_id=book_id).first()
     book.status = status
+    book.library = library
     book.update_at = update_at
-    book.complited_at = complited_at
 
     db.session.commit()
 
     return jsonify(book.tojson())
+
+@app.route("/delete_book", methods=["DELETE"])
+def delete_book():
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    user = User.query.filter_by(id=user_id).first()
+    book_id = request.json["book_id"]
+
+    book = Library.query.filter_by(book_id=book_id).first()
+    db.session.delete(book)
+    db.session.commit()
+
+    return jsonify({"message": "Book deleted"})
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

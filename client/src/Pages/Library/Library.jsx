@@ -6,7 +6,10 @@ import LibrarySection from '../../components/LibrarySection/LibrarySection.jsx';
 
 function Library() {
     const [user, setUser] = useState(User);
-    console.log(user);
+    const [books, setBooks] = useState([]);
+    const [readLater, setReadLater] = useState([]);
+    const [reading, setReading] = useState([]);
+    const [doneReading, setdoneReading] = useState([]);
     useEffect(() => {
         (async () => {
             try {
@@ -17,12 +20,28 @@ function Library() {
             }
         })();
     }, []);
+    useEffect(() => {
+        (async () => {
+            try {
+                const resp = await httpClient.get("//localhost:5000/library");
+                const fetchedBooks = resp.data.libraries;
+                setBooks(fetchedBooks);
+                setReadLater(fetchedBooks.filter(book => book.status === 'Read Later'));
+                setReading(fetchedBooks.filter(book => book.status === 'Reading'));
+                setDoneReading(fetchedBooks.filter(book => book.status === 'Done Reading'));
+            } catch (error) {
+                console.log("Not authenticated");
+            }
+        })();
+    }, []);
+
 
     return (
         <div className={styles.librarySection}>
             <h1 className={styles.header}>hello, {user.username}</h1>
-            <LibrarySection />
-
+            <LibrarySection books={readLater} text='Read Later' />
+            <LibrarySection books={reading} text='Reading' />
+            <LibrarySection books={doneReading} text='Done Reading'/>
         </div>
     );
 }

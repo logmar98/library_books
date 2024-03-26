@@ -10,28 +10,34 @@
     max-width: max-content;
     border: 1px solid black;
     border-radius: 0 0 10px 10px;
+    box-shadow: 5px -5px 8px black;
 }
-.container:hover{
-    transition: 1s;
-
-}
+ 
 .text {
     writing-mode: vertical-lr;
     padding: 10px;
-    /*    text-orientation: upright; */
+/*  text-orientation: upright; */
     cursor: pointer;
     transform: rotate(180deg);
 }
 
 .image {
     height: 100%;
-    width: auto;
+    max-width: 0;
+    overflow: hidden;
+    transition: max-with 1s ;
+    position: relative; /* Add relative positioning */
 }
-
+.hovered {
+    max-width: 200px;
+    transition: max-width 1s ;
+    
+}
 
 .image img {
     height: 100%;
     width: auto;
+   
 }
 
   

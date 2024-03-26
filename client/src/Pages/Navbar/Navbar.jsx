@@ -31,7 +31,7 @@ function Navbar() {
                 {user != null && (
                     <ul className={styles.links}>
                         <li><a href="/library">Library</a></li>
-                        <li><a href="">books</a></li>
+                        <li><a href="/books">books</a></li>
                     </ul>
                 )} 
 

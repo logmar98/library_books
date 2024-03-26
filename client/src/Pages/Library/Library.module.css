@@ -1,3 +1,7 @@
 .librarySection {
   padding: 0 40px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }

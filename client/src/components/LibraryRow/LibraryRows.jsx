@@ -23,11 +23,15 @@ function LibraryRows(props) {
     }, [width]);
 
     const rows = [];
+    const radiusClass = ['Read Later', 'Read Next', 'Reading', 'Stop Read', 'Complete'].includes(props.text) ? '' : styles.noRadius;
+    const firstRowClass = props.isFirstRow ? styles.firstRow : styles.noRadius;
+
     for (let i = 0; i < books.length; i += booksPerRow) {
         const rowKey = `row-${i}`;
         const booksInRow = books.slice(i, i + booksPerRow).map((book, index) => (
-            <Book key={index} color={generateColor()} title={book.book_name} />
+            <Book key={index} book_id={book.book_id} img={book.img} color={book.color} title={book.book_name} />
         ));
+
         rows.push(
             <div key={rowKey} className={styles.libraryRow}>
                 {booksInRow}
@@ -40,17 +44,12 @@ function LibraryRows(props) {
     }
 
     return (
-        <div id="librarySection" style={{ width: `${width}%` }} className={styles.librarySection}>
+        <div id="librarySection" style={{ width: `${width}%` }} className={`${styles.librarySection}  ${firstRowClass}`}>
             <p>{props.text}</p>
             {rows}
         </div>
     );
 }
 
-function generateColor() {
-    const colors = ['30348C', '161B93', '308C39', '4C4D5E', '868AD0', '8C3030', '8C3078', '8C3083', '8C4C30', '8C7230'];
-    const randomIndex = Math.floor(Math.random() * colors.length);
-    return '#' + colors[randomIndex];
-}
 
 export default LibraryRows;

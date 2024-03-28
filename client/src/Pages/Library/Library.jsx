@@ -9,7 +9,7 @@ function Library() {
     const [books, setBooks] = useState([]);
     const [readLater, setReadLater] = useState([]);
     const [reading, setReading] = useState([]);
-    const [doneReading, setdoneReading] = useState([]);
+    const [doneReading, setDoneReading] = useState([]);
     useEffect(() => {
         (async () => {
             try {
@@ -30,7 +30,7 @@ function Library() {
                 setReading(fetchedBooks.filter(book => book.status === 'Reading'));
                 setDoneReading(fetchedBooks.filter(book => book.status === 'Done Reading'));
             } catch (error) {
-                console.log("Not authenticated");
+                console.log("Not authenticated: ", error);
             }
         })();
     }, []);

@@ -12,6 +12,14 @@ function LibrarySection(props) {
     const [divtoshow, setDivtoshow] = useState([]);
 
 
+
+    function resizebyhight() {
+        if (detailsRef.current.open) {
+        summaryRef.current.classList.add(styles.headerInactive);
+        } else {
+        summaryRef.current.classList.remove(styles.headerInactive);
+        }
+    }
     useEffect(() => {
         if (props.text === 'Read Later') {
             setArray(props.books.filter(book => book.library === 'Read Later'));
@@ -22,40 +30,57 @@ function LibrarySection(props) {
             setArray1(props.books.filter(book => book.library === 'Stop Reading'));
             setArray2(props.books.filter(book => book.library === 'Complete'));
         }
-        else if (props.text === 'Done Reading') {
-            setArray([]); 
-        }
     }, [props.text, props.books]);
-
-    function resizebyhight() {
-        if (detailsRef.current.open) {
-        summaryRef.current.classList.add(styles.headerInactive);
-        } else {
-        summaryRef.current.classList.remove(styles.headerInactive);
-        }
-    }
+    
     useEffect(() => {
-        (async () => {
-            if (props.text === 'Read Later') {
-                setDivtoshow(<div className={styles.containerBody}>
-                                <LibraryRows books={array} text="Read Later" width="70" booksnumber={9}/>
-                                <LibraryRows books={array1} text="Read Next" width="30" booksnumber={3}/>
-                            </div>)
+        let completedBooksByYear = {};
+    
+        props.books.forEach(book => {
+            if (book.complited_at) {
+                let year = book.complited_at.split('-')[0];
+                if (!completedBooksByYear[year]) {
+                    completedBooksByYear[year] = [];
+                }
+                completedBooksByYear[year].push(book);
             }
-            else if (props.text === 'Reading') {
-                setDivtoshow(<div className={styles.containerBody}>
-                                <LibraryRows books={array} text="Reading" width="60" booksnumber={5}/>
-                                <LibraryRows books={array1} text="stop Reading" width="20" booksnumber={3}/>
-                                <LibraryRows books={array2} text="complete" width="20" booksnumber={3}/>
-                            </div>)
+        });
+    
+        if (props.text === 'Read Later') {
+            setDivtoshow(
+                <div className={styles.containerBody}>
+                    <LibraryRows books={array} text="Read Later" width="70" booksnumber={9}/>
+                    <LibraryRows books={array1} text="Read Next" width="30" booksnumber={3}/>
+                </div>
+            )
+        }
+        else if (props.text === 'Reading') {
+            setDivtoshow(
+                <div className={styles.containerBody}>
+                    <LibraryRows books={array} text="Reading" width="60" booksnumber={5}/>
+                    <LibraryRows books={array1} text="stop Reading" width="20" booksnumber={3}/>
+                    <LibraryRows books={array2} text="complete" width="20" booksnumber={3}/>
+                </div>
+            )
+        }
+        else if (props.text === 'Done Reading') {
+            let divToShow = [];
+            let i = 0;
+            let firstRow;
+            for (let year in completedBooksByYear) {
+                if (i === 0) {
+                    firstRow = true;
+                }
+                else {
+                    firstRow = false;
+                }
+                divToShow.unshift(
+                    <LibraryRows isFirstRow={firstRow} books={completedBooksByYear[year]} text={year} width="100" booksnumber={completedBooksByYear[year].length}/>
+                );
+                i++;
             }
-            else if (props.text === 'Done Reading') {
-                setDivtoshow(<div className={styles.containerBody}>
-                                <LibraryRows books={[]} text="2022" width="100" booksnumber={9}/>
-                            </div>)
-            }
-        })();
-    }, [props.text, array, array1, array2]);
+            setDivtoshow(<div className={styles.containerBodyComplited}>{divToShow}</div>);
+        }
+    }, [props.text, array, array1, array2, props.books]);
     
   return (
     <div>

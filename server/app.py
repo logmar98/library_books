@@ -101,6 +101,8 @@ def add_book():
     user = User.query.filter_by(id=user_id).first()
     book_name = request.json["book_name"]
     book_id = request.json["book_id"]
+    img = request.json["img"]
+    color = request.json["color"]
     status = request.json["status"]
     library = request.json["library"]
     create_at = request.json["create_at"]
@@ -110,6 +112,8 @@ def add_book():
     new_book = Library(
         book_name=book_name,
         book_id=book_id,
+        img=img,
+        color=color,
         status=status,
         library=library,
         create_at=create_at,
@@ -161,7 +165,21 @@ def delete_book():
 
     return jsonify({"message": "Book deleted"})
 
-
+@app.route("/delete_all_books", methods=["DELETE"])
+def delete_all_books():
+    user_id = session.get("user_id")
+    
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    user = User.query.filter_by(id=user_id).first()
+    books = Library.query.filter_by(user_id=user.id).all()
+    
+    for book in books:
+        db.session.delete(book)
+    db.session.commit()
+    
+    return jsonify({"message": "All books deleted"})
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -11,14 +11,16 @@
     border: 1px solid black;
     border-radius: 0 0 10px 10px;
     box-shadow: 5px -5px 8px black;
+    overflow: hidden;
 }
- 
+
 .text {
-    writing-mode: vertical-lr;
+    writing-mode: vertical-rl;
     padding: 10px;
 /*  text-orientation: upright; */
     cursor: pointer;
     transform: rotate(180deg);
+
 }
 
 .image {

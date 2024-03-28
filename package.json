@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "date-fns": "^3.6.0",
+    "franc-min": "^6.2.0",
+    "langs": "^2.0.0",
+    "react-truncate": "^2.4.0"
+  }
+}

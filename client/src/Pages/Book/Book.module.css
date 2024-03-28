@@ -1,0 +1,77 @@
+.container{
+    display: flex;
+    gap: 100px;
+    padding: 0 10%;
+    margin-top: 50px;
+    font-family: 'averia serif libre', cursive;
+}
+.imgContainer{
+    min-width: 40%;
+    width: fit-content;
+    height: 70vh;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 6px 6px 10px black;
+    cursor: pointer;
+    border: 1px solid black;
+    background-color: white;
+}
+.img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;  
+}
+.book{
+    margin-top: 20px;
+    width: 60%;
+}
+.book h3{
+    margin: 0;
+}
+.btns{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+}
+.btns div{
+    display: flex;
+    gap: 10px;
+    
+}
+.btns h3{
+    margin: 0;
+}
+.description{
+    height: 200px;
+    margin-top: 10px;
+    overflow: auto;
+
+}
+.description::-webkit-scrollbar {
+    width: 15px;
+}
+
+.description::-webkit-scrollbar-track {
+    background: rgb(181, 172, 149); 
+    border-radius: 10px; 
+}
+
+.description::-webkit-scrollbar-thumb {
+    background: rgb(69, 69, 69);
+    border-radius: 10px;
+}
+
+.description::-webkit-scrollbar-thumb:hover {
+    background: rgb(124, 121, 121);
+}
+
+.loading{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-size: 2rem;
+    font-family: 'averia serif libre', cursive;
+}

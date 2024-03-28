@@ -7,10 +7,12 @@ import httpClient from '../../httpClient';
 function Books() {
     const [search, setSearch] = useState("");
     const [books, setBooks] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const handleSearch = (e) => {
         if (e.key !== "Enter") return;
         setSearch(e.target.value);
+        
     }
     const handleclick = () => {
         setSearch(document.getElementById('inputsearch').value);
@@ -20,8 +22,9 @@ function Books() {
         (async () => {
             try {
                 if (search === "") return;
+                setLoading(true);
                 const apiKey = "AIzaSyB2S7wSIKHFQQ_gfUe_nAEVPcr9wgIDxMQ";
-                const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&key=${apiKey}`);
+                const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&key=${apiKey}&maxResults=40&orderBy=relevance`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch books');
                 }
@@ -29,16 +32,24 @@ function Books() {
                 setBooks(data.items);
             } catch (error) {
                 console.log("Error fetching books:", error);
+            } finally {
+                setLoading(false);
             }
         })();
     }, [search]);
+
+    
 
     const divs = books && books.map((book, index) => (
         <BookProdact 
             key={index}
             id={book.id}
             title={book.volumeInfo?.title} 
-            img={book.volumeInfo?.imageLinks?.thumbnail} 
+            img={book.volumeInfo?.imageLinks?.medium ||
+                book.volumeInfo?.imageLinks?.small ||
+                book.volumeInfo?.imageLinks?.thumbnail ||
+                book.volumeInfo?.imageLinks?.smallThumbnail
+            } 
         />
     ));
 
@@ -52,9 +63,12 @@ function Books() {
                 <img onClick={handleclick} className={styles.searchImg} src={searchImg} alt="" />
                 <input onKeyDown={(e) => handleSearch(e)} id='inputsearch' className={styles.search} type="text" />
             </div>
-            <div className={styles.books}>
-                {divs}
-            </div>
+            {loading ? <div>Loading...</div> : (
+            (!books || books.length == 0) ? <div>No books found</div> : 
+                <div className={styles.books}>
+                    {divs}
+                </div>
+            )}
         </div>
     )
 }

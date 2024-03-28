@@ -29,6 +29,8 @@ class Library(db.Model):
     id = db.Column(db.Integer, primary_key=True, unique=True)
     book_name = db.Column(db.String(100), nullable=False)
     book_id = db.Column(db.String(100), nullable=False)
+    img = db.Column(db.String(100), nullable=False)
+    color = db.Column(db.String(100), nullable=False)
     status = db.Column(db.String(100), nullable=False)
     library = db.Column(db.String(100), nullable=False)
     create_at = db.Column(db.String(100), nullable=False)
@@ -43,6 +45,8 @@ class Library(db.Model):
                 'id': self.id,
                 'book_name': self.book_name,
                 'book_id': self.book_id,
+                'color': self.color,
+                'img': self.img,
                 'status': self.status,
                 'library': self.library,
                 'create_at': self.create_at,

@@ -23,6 +23,17 @@
     margin-bottom: 10px;
 
 }
+.firstRow{
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.noRadius{
+    border-radius: 0;
+    padding-bottom: 0;
+    border-bottom: 2px solid black;
+}
 .librarySection p{
     margin: 5px;
 }

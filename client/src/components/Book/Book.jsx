@@ -1,5 +1,5 @@
 import styles from './Book.module.css';
-import bookcover from '../../Images/bookcover.jpg';
+
 import React, { useState } from 'react';
 
 function Book(props) {
@@ -8,10 +8,10 @@ function Book(props) {
         <div style={{backgroundColor: `${props.color}`}} className={styles.container} onMouseEnter={() => setIsHovered(true)} 
         onMouseLeave={() => setIsHovered(false)}>
             <div className={styles.text}>
-                {props.title}
+            {props.title.split(' ').slice(0, 2).join(' ') + '...'}
             </div>
-            <div className={`${styles.image} ${isHovered ? styles.hovered : ''}`}>
-                <img src={bookcover} alt="Cover Image" />
+            <div id={props.book_id} className={`${styles.image} ${isHovered ? styles.hovered : ''}`}>
+                <img src={props.img} alt="Cover Image" />
             </div>
                 
         </div>

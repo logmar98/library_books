@@ -90,6 +90,17 @@ def get_library():
     return jsonify({
         "libraries": [library.tojson() for library in user.libraries]
     })
+@app.route("/find_book", methods=["GET"])
+def find_book():
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    user = User.query.filter_by(id=user_id).first()
+    book_id = request.json["book_id"]
+    book = Library.query.filter_by(book_id=book_id).first()
+    return jsonify(book.tojson())
 
 @app.route("/new_book", methods=["PUT"])
 def add_book():

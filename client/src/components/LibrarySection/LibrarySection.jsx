@@ -48,33 +48,34 @@ function LibrarySection(props) {
         if (props.text === 'Read Later') {
             setDivtoshow(
                 <div className={styles.containerBody}>
-                    <LibraryRows books={array} text="Read Later" width="70" booksnumber={9}/>
-                    <LibraryRows books={array1} text="Read Next" width="30" booksnumber={3}/>
+                    <LibraryRows isFirstRow={true} books={array} text="Read Later" width="70" booksnumber={9}/>
+                    <LibraryRows isFirstRow={true} books={array1} text="Read Next" width="30" booksnumber={3}/>
                 </div>
             )
         }
         else if (props.text === 'Reading') {
             setDivtoshow(
                 <div className={styles.containerBody}>
-                    <LibraryRows books={array} text="Reading" width="60" booksnumber={5}/>
-                    <LibraryRows books={array1} text="stop Reading" width="20" booksnumber={3}/>
-                    <LibraryRows books={array2} text="complete" width="20" booksnumber={3}/>
+                    <LibraryRows isFirstRow={true} books={array} text="Reading" width="60" booksnumber={5}/>
+                    <LibraryRows isFirstRow={true} books={array1} text="stop Reading" width="20" booksnumber={3}/>
+                    <LibraryRows isFirstRow={true} books={array2} text="complete" width="20" booksnumber={3}/>
                 </div>
             )
         }
         else if (props.text === 'Done Reading') {
             let divToShow = [];
             let i = 0;
+            let completlen = Object.keys(completedBooksByYear).length;
             let firstRow;
             for (let year in completedBooksByYear) {
-                if (i === 0) {
+                if (i === completlen - 1) {
                     firstRow = true;
                 }
                 else {
                     firstRow = false;
                 }
                 divToShow.unshift(
-                    <LibraryRows isFirstRow={firstRow} books={completedBooksByYear[year]} text={year} width="100" booksnumber={completedBooksByYear[year].length}/>
+                    <LibraryRows key={year} isFirstRow={firstRow} books={completedBooksByYear[year]} text={year} width="100" booksnumber={completedBooksByYear[year].length}/>
                 );
                 i++;
             }

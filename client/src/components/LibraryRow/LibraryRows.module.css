@@ -12,7 +12,6 @@
 }
 .libraryRow{
     background-color: #591919;
-    border-radius: 18px;
     padding: 10px;
     box-shadow: 10px -10px 5px black inset;
     height: fit-content;
@@ -28,6 +27,7 @@
     border-top-right-radius: 18px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    border-bottom: 2px solid black;
 }
 .noRadius{
     border-radius: 0;

@@ -23,7 +23,7 @@ function Books() {
             try {
                 if (search === "") return;
                 setLoading(true);
-                const apiKey = "AIzaSyB2S7wSIKHFQQ_gfUe_nAEVPcr9wgIDxMQ";
+                const apiKey = "AIzaSyCsivG4nGLUIm_3d10Eee07dns17pCSf6k";
                 const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}&key=${apiKey}&maxResults=40&orderBy=relevance`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch books');

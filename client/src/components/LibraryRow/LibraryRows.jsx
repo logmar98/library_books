@@ -23,7 +23,6 @@ function LibraryRows(props) {
     }, [width]);
 
     const rows = [];
-    const radiusClass = ['Read Later', 'Read Next', 'Reading', 'Stop Read', 'Complete'].includes(props.text) ? '' : styles.noRadius;
     const firstRowClass = props.isFirstRow ? styles.firstRow : styles.noRadius;
 
     for (let i = 0; i < books.length; i += booksPerRow) {

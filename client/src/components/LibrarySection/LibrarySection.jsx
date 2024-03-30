@@ -28,7 +28,7 @@ function LibrarySection(props) {
         else if (props.text === 'Reading') {
             setArray(props.books.filter(book => book.library === 'Reading'));
             setArray1(props.books.filter(book => book.library === 'Stop Reading'));
-            setArray2(props.books.filter(book => book.library === 'Complete'));
+            //setArray2(props.books.filter(book => book.library === 'Complete'));
         }
     }, [props.text, props.books]);
     
@@ -48,17 +48,17 @@ function LibrarySection(props) {
         if (props.text === 'Read Later') {
             setDivtoshow(
                 <div className={styles.containerBody}>
-                    <LibraryRows isFirstRow={true} books={array} text="Read Later" width="70" booksnumber={9}/>
-                    <LibraryRows isFirstRow={true} books={array1} text="Read Next" width="30" booksnumber={3}/>
+                    <LibraryRows isFirstRow={true} books={array} text="Read Later" width="70" />
+                    <LibraryRows isFirstRow={true} books={array1} text="Read Next" width="30" />
                 </div>
             )
         }
         else if (props.text === 'Reading') {
             setDivtoshow(
                 <div className={styles.containerBody}>
-                    <LibraryRows isFirstRow={true} books={array} text="Reading" width="60" booksnumber={5}/>
-                    <LibraryRows isFirstRow={true} books={array1} text="stop Reading" width="20" booksnumber={3}/>
-                    <LibraryRows isFirstRow={true} books={array2} text="complete" width="20" booksnumber={3}/>
+                    <LibraryRows isFirstRow={true} books={array} text="Reading" width="70" />
+                    <LibraryRows isFirstRow={true} books={array1} text="stop Reading" width="30" />
+                    
                 </div>
             )
         }
@@ -75,9 +75,12 @@ function LibrarySection(props) {
                     firstRow = false;
                 }
                 divToShow.unshift(
-                    <LibraryRows key={year} isFirstRow={firstRow} books={completedBooksByYear[year]} text={year} width="100" booksnumber={completedBooksByYear[year].length}/>
+                    <LibraryRows key={year} isFirstRow={firstRow} books={completedBooksByYear[year]} text={year} width="100" />
                 );
                 i++;
+            }
+            if (completlen === 0) {
+                divToShow.push(<LibraryRows key='empty' isFirstRow={true} books={[]} text='No Books Here' width="100" />);
             }
             setDivtoshow(<div className={styles.containerBodyComplited}>{divToShow}</div>);
         }

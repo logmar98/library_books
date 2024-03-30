@@ -12,6 +12,7 @@
 .containerBody{
     padding: 20px 30px;
     display: flex;
+    align-items: end;
     gap: 20px;
 }
 .containerBodyComplited{

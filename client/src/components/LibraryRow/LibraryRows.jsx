@@ -4,12 +4,12 @@ import Book from '../Book/Book.jsx';
 
 function LibraryRows(props) {
     const { books, width } = props;
-    const [booksPerRow, setBooksPerRow] = useState(3); // Default to 3 books per row
+    const [booksPerRow, setBooksPerRow] = useState(); // Default to 3 books per row
 
     useEffect(() => {
         function calculateBooksPerRow() {
-            const containerWidth = document.getElementById('librarySection').offsetWidth;
-            const bookWidth = 80; // Adjust according to the actual width of the book
+            const containerWidth = width * 0.01 * window.innerWidth;
+            const bookWidth = 70; // Adjust according to the actual width of the book
             const newBooksPerRow = Math.floor(containerWidth / bookWidth);
             setBooksPerRow(newBooksPerRow || 1); // Ensure at least one book per row
         }
@@ -28,10 +28,10 @@ function LibraryRows(props) {
     for (let i = 0; i < books.length; i += booksPerRow) {
         const rowKey = `row-${i}`;
         const booksInRow = books.slice(i, i + booksPerRow).map((book, index) => (
-            <Book key={index} book_id={book.book_id} img={book.img} color={book.color} title={book.book_name} />
+            <Book key={index} book_id={book.book_id} id={book.id} img={book.img} color={book.color} title={book.book_name} />
         ));
 
-        rows.push(
+        rows.unshift(
             <div key={rowKey} className={styles.libraryRow}>
                 {booksInRow}
             </div>

@@ -17,6 +17,23 @@ function Books() {
     const handleclick = () => {
         setSearch(document.getElementById('inputsearch').value);
     }
+    useEffect(() => {
+        (async () => {
+            try {
+                const resp = await httpClient.get("//localhost:5000/@me");
+                if (resp.status === 401) {
+                    window.location.href = '/login';
+                } else {
+                    setUser(resp.data);
+                }
+            } catch (error) {
+                console.log("Not authenticated ", error);
+                if (error.response.status === 401){
+                    window.location.href = '/login';
+                }
+            }
+        })();
+    }, []);
 
     useEffect(() => {
         (async () => {

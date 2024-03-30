@@ -14,7 +14,7 @@
 .imgContainer{
     min-width: 400px;
     width: auto;
-    height: 70vh;
+    height: auto;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 6px 6px 10px black;
@@ -24,12 +24,12 @@
 }
 .img{
     height: 100%;
-    width: auto;
+    width: 100%;
     object-fit: cover;
 }
 .book{
     margin-top: 20px;
-    width: 60%;
+    width: auto;
 }
 .book h3{
     margin: 0;
@@ -83,7 +83,7 @@
 }
 .compliteSection{
     background: rgba(124, 121, 121, 0.397);
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

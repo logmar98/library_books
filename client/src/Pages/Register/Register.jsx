@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Register.module.css';
 import Button from '../../components/Button/Button';
 import httpClient from '../../httpClient';
@@ -19,7 +19,18 @@ function Register() {
             confirmPassword.style.outline = '2px solid #00ff00b8';
         }
     }
-
+    useEffect(() => {
+        (async () => {
+            try {
+                const resp = await httpClient.get("//localhost:5000/@me");
+                if (resp.status === 200) {
+                    window.location.href = '/library';
+                }
+            } catch (error) {
+                console.log("Not authenticated");
+            }
+        })();
+    }, []);
     const checkemail = () => {
         const email = document.getElementById('email');
         if (email.value.includes('@') && email.value.includes('.com')) {

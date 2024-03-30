@@ -5,3 +5,10 @@
   flex-direction: column;
   gap: 20px;
 }
+.search{
+  align-self: center;
+  border: 1px solid #000;
+  border-radius: 20px;
+  width: 80%;
+  padding: 5px 10px;
+}

@@ -146,34 +146,42 @@ def update_book():
         return jsonify({"error": "Unauthorized"}), 401
 
     user = User.query.filter_by(id=user_id).first()
-    book_id = request.json["book_id"]
-    status = request.json["status"]
+    id = request.json["id"]
     library = request.json["library"]
+    if (library == "Read Later" or library == "Read Next"):
+        status = "Read Later"
+    if (library == "Reading" or library == "Stop Reading"):
+        status = "Reading"
+    if (library == "Done Reading"):
+        status = "Done Reading"
     update_at = request.json["update_at"]
+    completed_at = request.json["completed_at"]
 
-    book = Library.query.filter_by(book_id=book_id).first()
+    book = Library.query.filter_by(id=id).first()
     book.status = status
     book.library = library
     book.update_at = update_at
+    book.completed_at = completed_at
 
     db.session.commit()
 
-    return jsonify(book.tojson())
+    updated_book = Library.query.filter_by(id=id).first()
 
-@app.route("/delete_book", methods=["DELETE"])
-def delete_book():
+    return jsonify(updated_book.tojson())
+
+@app.route("/delete_book/<string:id>", methods=["DELETE"])
+def delete_book(id):
     user_id = session.get("user_id")
-
+    
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
 
     user = User.query.filter_by(id=user_id).first()
-    book_id = request.json["book_id"]
-
-    book = Library.query.filter_by(book_id=book_id).first()
+    book = Library.query.filter_by(id=id).first()
+    
     db.session.delete(book)
     db.session.commit()
-
+    
     return jsonify({"message": "Book deleted"})
 
 @app.route("/delete_all_books", methods=["DELETE"])

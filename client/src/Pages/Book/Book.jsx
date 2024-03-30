@@ -18,6 +18,24 @@ function Book(props) {
     useEffect(() => {
         (async () => {
             try {
+                const resp = await httpClient.get("//localhost:5000/@me");
+                if (resp.status === 401) {
+                    window.location.href = '/login';
+                } else {
+                    setUser(resp.data);
+                }
+            } catch (error) {
+                console.log("Not authenticated ", error);
+                if (error.response.status === 401){
+                    window.location.href = '/login';
+                }
+            }
+        })();
+    }, []);
+
+    useEffect(() => {
+        (async () => {
+            try {
                 const apiKey = "AIzaSyCsivG4nGLUIm_3d10Eee07dns17pCSf6k";
                 const response = await fetch(`https://www.googleapis.com/books/v1/volumes/`+ bookId +`?key=${apiKey}`);
                 if (!response.ok) {
@@ -122,7 +140,6 @@ function Book(props) {
     }
     const handleCompliteDate = (e) => {
         setCompliteDate(e.target.value);
-        console.log(compliteDate);
     }
     return (
         <div className={styles.container}>
@@ -191,7 +208,7 @@ function Book(props) {
                             <input value={compliteDate} onChange={handleCompliteDate} type="date" />
                         </div>
                         <div onClick={() => insertBook("Done Reading", "Done Reading", compliteDate)}>
-                            <Button text="Complite" />
+                            <Button text="Done Reading" />
                         </div>
                     </div>
                 </div>

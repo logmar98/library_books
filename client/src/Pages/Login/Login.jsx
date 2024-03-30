@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Login.module.css';
 import Button from '../../components/Button/Button';
 import httpClient from '../../httpClient';
@@ -14,7 +14,18 @@ function Login() {
     const handlePassword = (e) => {
         setPass(e.target.value);
     }
-
+    useEffect(() => {
+        (async () => {
+            try {
+                const resp = await httpClient.get("//localhost:5000/@me");
+                if (resp.status === 200) {
+                    window.location.href = '/library';
+                }
+            } catch (error) {
+                console.log("Not authenticated");
+            }
+        })();
+    }, []);
     const loginUser = async () => {
         const alert = document.getElementById('alert');
 

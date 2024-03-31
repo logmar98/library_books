@@ -11,6 +11,21 @@ function Library() {
     const [reading, setReading] = useState([]);
     const [doneReading, setDoneReading] = useState([]);
     const [search, setSearch] = useState('');
+
+    const fetchLibraryData = async () => {
+        try {
+            const resp = await httpClient.get("//localhost:5000/library");
+            const fetched = resp.data.libraries;
+            const fetchedBooks = fetched.filter(book => book.book_name.toLowerCase().includes(search.toLowerCase()));
+            setBooks(fetchedBooks);
+            setReadLater(fetchedBooks.filter(book => book.status === 'Read Later'));
+            setReading(fetchedBooks.filter(book => book.status === 'Reading'));
+            setDoneReading(fetchedBooks.filter(book => book.status === 'Done Reading'));
+        } catch (error) {
+            console.log("Error fetching library data: ", error);
+        }
+    };
+
     useEffect(() => {
         (async () => {
             try {
@@ -28,20 +43,12 @@ function Library() {
             }
         })();
     }, []);
+
     useEffect(() => {
-        (async () => {
-            try {
-                const resp = await httpClient.get("//localhost:5000/library");
-                const fetched = resp.data.libraries;
-                const fetchedBooks = fetched.filter(book => book.book_name.toLowerCase().includes(search.toLowerCase()));
-                setBooks(fetchedBooks);
-                setReadLater(fetchedBooks.filter(book => book.status === 'Read Later'));
-                setReading(fetchedBooks.filter(book => book.status === 'Reading'));
-                setDoneReading(fetchedBooks.filter(book => book.status === 'Done Reading'));
-            } catch (error) {
-                console.log("Not authenticated: ", error);
-            }
-        })();
+        fetchLibraryData(); // Initial fetch
+        const intervalId = setInterval(fetchLibraryData, 10000); // Poll every minute
+
+        return () => clearInterval(intervalId); // Cleanup
     }, [search]);
 
     const handlesearch = (e) => {
@@ -58,6 +65,5 @@ function Library() {
         </div>
     );
 }
-
 
 export default Library;

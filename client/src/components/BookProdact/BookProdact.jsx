@@ -4,15 +4,15 @@ import cover from '../../Images/bookcover.jpg';
 function BookProdact(props) {
 
 
-    function handleclick() {
-        window.location = `/books/${props.id}`;
-    }
-
+  
+    
     return (
-        <div className={styles.container} onClick={handleclick}>
-            <img className={styles.imgCover} src={props.img} alt="" />
-            <p className={styles.text}>{props.title}</p>
-        </div>
+        <a  href={`/books/${props.id}`}>
+            <div className={styles.container}>
+                <img className={styles.imgCover} src={props.img} alt="" />
+                <p className={styles.text}>{props.title}</p>
+            </div>
+        </a>
     );
 }
 

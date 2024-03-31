@@ -21,14 +21,9 @@ function Book(props) {
                 const resp = await httpClient.get("//localhost:5000/@me");
                 if (resp.status === 401) {
                     window.location.href = '/login';
-                } else {
-                    setUser(resp.data);
                 }
             } catch (error) {
                 console.log("Not authenticated ", error);
-                if (error.response.status === 401){
-                    window.location.href = '/login';
-                }
             }
         })();
     }, []);
@@ -72,18 +67,18 @@ function Book(props) {
     useEffect(() => {
         (async () => {
             let imageUrl = '';
-            const imageSizes = ['extraLarge', 'large', 'medium', 'small', 'thumbnail', 'smallThumbnail'];
+            const imageSizes = ['smallThumbnail', 'thumbnail', 'small', 'medium', 'large', 'extraLarge'].reverse();
     
             for (const size of imageSizes) {
                 if (books.volumeInfo?.imageLinks?.[size]) {
                     imageUrl = books.volumeInfo.imageLinks[size];
-                    break; 
+                    const image = new Image();
+                    image.src = imageUrl;
+                    image.onload = () => {
+                        setImg(imageUrl);
+                    }
                 }
             }
-            if (!imageUrl) {
-                imageUrl = '';
-            }
-            setImg(imageUrl);
         })();
     }, [books]);
     function getCurrentDate() {
@@ -106,22 +101,29 @@ function Book(props) {
         return '#' + colors[randomIndex];
     }
 
-    function insertBook(status, library, complite = "") {
+    async function insertBook(status, library, complite = "") {
         try {
-        const resp = httpClient.put("//localhost:5000/new_book", {"book_name": books.volumeInfo?.title,
-                                                                    "book_id": bookId,
-                                                                    "img": books.volumeInfo.imageLinks.smallThumbnail || books.volumeInfo.imageLinks.thumbnail,
-                                                                    "color": generateColor(),
-                                                                    "status": status,
-                                                                    "library": library,
-                                                                    "create_at": getCurrentDate(),
-                                                                    "update_at": getCurrentDate(),
-                                                                    "complited_at": complite});
-        }
-        catch (error) {
-            console.log("Not authenticated");
+            const resp = await httpClient.put("//localhost:5000/new_book", {
+                "book_name": books.volumeInfo?.title,
+                "book_id": bookId,
+                "img": books.volumeInfo?.imageLinks?.smallThumbnail || books.volumeInfo?.imageLinks?.thumbnail || 'https://placehold.co/400x600',
+                "color": generateColor(),
+                "status": status,
+                "library": library,
+                "create_at": getCurrentDate(),
+                "update_at": getCurrentDate(),
+                "complited_at": complite
+            });
+
+            if (resp.status === 200) {
+                alert("This Book Is Added To Your Library");
+            }
+        } catch (error) {
+            console.log("Error inserting book: ", error);
+            alert("Error inserting book. Please try again.");
         }
     }
+    
     
     if (loading) {
         return <div className={styles.loading}>Loading...</div>;
@@ -185,7 +187,7 @@ function Book(props) {
                     </div>
                 </div>
                 </div>
-            {authorBooks.length === 0 ? null :
+            {!authorBooks || authorBooks.length === 0 ? null :
             <div className={styles.authorBooks}>
                 <h1>More books by {books.volumeInfo?.authors}</h1>
                 <div className={styles.authorBooksContainer}>

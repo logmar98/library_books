@@ -136,7 +136,7 @@ def add_book():
     db.session.add(new_book)
     db.session.commit()
 
-    return jsonify(new_book.tojson())
+    return jsonify(new_book.tojson()), 200
 
 @app.route("/update_book", methods=["PATCH"])
 def update_book():
@@ -167,7 +167,7 @@ def update_book():
 
     updated_book = Library.query.filter_by(id=id).first()
 
-    return jsonify(updated_book.tojson())
+    return jsonify(updated_book.tojson()), 200
 
 @app.route("/delete_book/<string:id>", methods=["DELETE"])
 def delete_book(id):
@@ -182,7 +182,7 @@ def delete_book(id):
     db.session.delete(book)
     db.session.commit()
     
-    return jsonify({"message": "Book deleted"})
+    return jsonify({"message": "Book deleted"}), 200
 
 @app.route("/delete_all_books", methods=["DELETE"])
 def delete_all_books():

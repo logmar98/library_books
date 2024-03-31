@@ -23,22 +23,28 @@ function Book(props) {
         }
         return year + "-" + month + "-" + day;
     }
-    function deleteBook() {
+    async function deleteBook() {
         try {
-            const resp = httpClient.delete(`//localhost:5000/delete_book/${props.id}`);
+            const resp = await httpClient.delete(`//localhost:5000/delete_book/${props.id}`);
+            if (resp.status === 200) {
+                setClose(false);
+            }
         }
         catch (error) {
             console.log("Not authenticated");
         }
     }
-    function updateBook() {
+    async function updateBook() {
         try {
-            const resp = httpClient.patch(`//localhost:5000/update_book`, { 
+            const resp = await httpClient.patch(`//localhost:5000/update_book`, { 
             "id": props.id,
             "library": selectedOption,
             "update_at": getCurrentDate(),
             "completed_at": (selectedOption === "Done Reading" ? compliteDate : "")
         });
+        if (resp.status === 200) {
+            setClose(false);
+        }
         }
         catch (error) {
             console.log("Not authenticated: ", error);

@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-import { Analytics } from '@vercel/analytics/react';
 import Navbar from './Pages/Navbar/Navbar.jsx';
 import Footer from './Pages/Footer/Footer.jsx';
 import Register from './Pages/Register/Register.jsx';
@@ -17,6 +16,7 @@ const App = () => {
       <Navbar />
       <div className='app-content'>
         <Routes>
+          <Route path='/' Component={Login} />
           <Route path='/register' Component={Register} />
           <Route path='/login' Component={Login} />
           <Route path='/library' Component={Library} />
@@ -25,7 +25,6 @@ const App = () => {
         </Routes>
       </div>
       <Footer />
-      <Analytics />
     </div>
  );
 };

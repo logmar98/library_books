@@ -17,7 +17,6 @@ const App = () => {
       <Navbar />
       <div className='app-content'>
         <Routes>
-          <Route path='/' Component={Login} />
           <Route path='/register' Component={Register} />
           <Route path='/login' Component={Login} />
           <Route path='/library' Component={Library} />
